@@ -8,6 +8,10 @@ h1 {
   margin: auto;  
 }
 
+.center-card-header > div.mat-card-header-text {
+  margin: auto;  
+}
+
 .example-fill-remaining-space {
   flex: 1 1 auto;
 }

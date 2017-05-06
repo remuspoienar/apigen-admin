@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { ApiUser } from '../../models/api-user.model';
 import { AuthenticationService } from '../../services/authentication.service';
+import { authHandler } from '../../helpers/authentication.helper';
 
 @Component({
   selector: 'signin',
@@ -18,20 +19,19 @@ export class SigninComponent {
   errorMsg: string;
 
   constructor(
-    private router: Router,
+    private _router: Router,
     private _auth: AuthenticationService) { }
 
   signIn() {
     this.loading = true;
     this.errorMsg = null;
-    this._auth.login(this.email, this.password).subscribe(token => null, error => this.errorMsg = error);
-    this.loading = false;
-    
-    this.router.navigate(['dashboard']);
+
+    this._auth.login(this.email, this.password).subscribe(authHandler['data'].bind(this), authHandler['error'].bind(this));
   }
 
   goToSignUp() {
-    this.router.navigate(['/signup']);
+    this.loading = true;
+    this._router.navigate(['/signup']);
   }
 
 

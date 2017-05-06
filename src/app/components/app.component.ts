@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
+
+import { ApiUser } from './../models/api-user.model';
 
 @Component({
   selector: 'my-app',
@@ -16,27 +18,40 @@ import { AuthenticationService } from '../services/authentication.service';
       <span>OR</span>
       <button md-button routerLink="/signup">SIGN UP</button>
     </span>
-    <button *ngIf="!isSignedOut()" (click)="signOut()" md-button>SIGN OUT</button>
+    <span *ngIf="!isSignedOut()">
+      <b *ngIf="currentUser">{{ currentUser.name }}</b>
+      <button (click)="signOut()" md-button>SIGN OUT</button>
+    </span>
   </md-toolbar>
   <router-outlet></router-outlet>
-  `,
-  providers: [AuthenticationService]
+  `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   constructor(
-    private router: Router,
+    private _router: Router,
     private _auth: AuthenticationService) { }
+
+  ngOnInit() {
+    if (ApiUser.current === null) {
+      this._router.navigate(['signin']);
+    }
+  }
 
   signOut() {
     this._auth.logout();
+    this._router.navigate(['signin']);
+  }
+
+  get currentUser(): ApiUser {
+    return ApiUser.current;
   }
 
   gotoDashBoard() {
-    this.router.navigate(['dashboard']);
+    this._router.navigate(['dashboard']);
   }
 
-  isSignedOut() {
+  isSignedOut(): boolean {
     return localStorage.getItem('authToken') === null;
   }
 
