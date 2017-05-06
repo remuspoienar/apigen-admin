@@ -8,14 +8,15 @@
             <md-card-subtitle class="text-center">Please sign in</md-card-subtitle>
         </md-card-header>
 
-       
-            <md-chip-list class="auth-card-header mat-chip-list-stacked" *ngIf="errorMsg">
-                <md-chip selected="true" color="warn" class="center text-center">Invalid credentials</md-chip>
-                <md-chip class="center text-center">{{errorMsg }}</md-chip>
-            </md-chip-list>
-            <hr>
 
-            <div style="margin-bottom: 30px"></div>
+        <md-chip-list class="auth-card-header mat-chip-list-stacked" *ngIf="errorMsg">
+            <md-chip class="center text-center">Please try again</md-chip>
+            <md-chip selected="true" color="warn" class="center text-center">{{errorMsg }}</md-chip>
+
+        </md-chip-list>
+        <hr>
+
+        <div style="margin-bottom: 30px"></div>
 
 
         <md-card-content class="center text-center">

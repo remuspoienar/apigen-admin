@@ -3,20 +3,36 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+
+import { ApiUser } from './../models/api-user.model';
 
 @Injectable()
 export class AuthenticationService {
 
-    DEFAULT_OPTIONS = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
+    DEFAULT_HEADERS = new Headers({ 'Content-Type': 'application/json' });
+    DEFAULT_OPTIONS = new RequestOptions({ headers: this.DEFAULT_HEADERS });
 
     constructor(
         private _http: Http) { }
 
     logout() {
         localStorage.removeItem("authToken");
+        localStorage.removeItem('currentUser');
     }
 
-    login(email: string, password: string): Observable<string> {
+    getUserData(): Observable<any> {
+        let authToken = localStorage.getItem('authToken');
+        if (authToken === null) return null;
+
+        let options = this.DEFAULT_OPTIONS;
+        options.headers.append('Authorization', authToken);
+        return this._http.get('http://localhost:3003/me', options)
+            .map(this.handleUserData)
+            .catch(this.handleError);
+    }
+
+    login(email: string, password: string): Observable<any> {
         let data = {
             endpoint: 'http://localhost:3003/sign_in',
             body: {
@@ -27,7 +43,7 @@ export class AuthenticationService {
         return this.sendAuthRequest(data);
     }
 
-    register(userData:any): Observable<string> {
+    register(userData: any): Observable<any> {
         let data = {
             endpoint: 'http://localhost:3003/sign_up',
             body: userData
@@ -35,7 +51,7 @@ export class AuthenticationService {
         return this.sendAuthRequest(data);
     }
 
-    sendAuthRequest(data: any): Observable<string> {
+    sendAuthRequest(data: any): Observable<any> {
         return this._http.post(data.endpoint, data.body, data.options || this.DEFAULT_OPTIONS)
             .map(this.storeAuthToken)
             .catch(this.handleError);
@@ -46,6 +62,11 @@ export class AuthenticationService {
         if (body.hasOwnProperty('token')) {
             localStorage.setItem('authToken', body['token']);
         }
+    }
+
+    private handleUserData(res: Response) {
+        let body = res.json();
+        localStorage.setItem('currentUser', JSON.stringify(body));
     }
 
     private handleError(error: Response | any) {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { authHandler } from '../../helpers/authentication.helper';
 
 @Component({
     selector: 'signup',
@@ -19,7 +20,7 @@ export class SignupComponent {
     errorMsg: string;
 
     constructor(
-        private router: Router,
+        private _router: Router,
         private _auth: AuthenticationService) { }
 
     signUp() {
@@ -31,13 +32,13 @@ export class SignupComponent {
             password: this.password,
             password_confirmation: this.passwordConfirmation
         };
-        this._auth.register(userData).subscribe(error => this.errorMsg = error);
-        this.loading = false;
-        this.router.navigate(['dashboard']);
+
+        this._auth.register(userData).subscribe(authHandler['data'].bind(this), authHandler['error'].bind(this));;
     }
 
     goToSignIn() {
-        this.router.navigate(['signin']);
+        this.loading = true;
+        this._router.navigate(['signin']);
     }
 
 

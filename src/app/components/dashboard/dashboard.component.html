@@ -1,1 +1,41 @@
-<h1>Welcome</h1>
+<span *ngIf="currentUser">
+  <br>
+  <md-card class="center text-center one-half">
+    <md-card-header class="center-card-header">
+      <md-card-title >API PROJECTS</md-card-title>
+      <md-card-subtitle>by {{ currentUser.name }}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <a md-raised-button color="primary" (click)="gotoNewProject()"><md-icon>add</md-icon></a>
+      <md-grid-list cols="2" rowHeight="2:1">
+        <md-grid-tile *ngFor="let apiProject of currentUser.apiProjects">
+          <md-card class="text-center one-third">
+            <md-card-header class="center-card-header">
+            <md-card-title>{{ apiProject.name }}</md-card-title>
+            <md-card-subtitle>Created on {{apiProject.createdAt | date:'yMMMdjms'}}</md-card-subtitle>
+            </md-card-header>
+            <md-card-content>
+              <hr>
+              <span *ngIf="apiProject.apiResources.length === 0">(No resources defined)</span>
+              <md-chip-list *ngIf="apiProject.apiResources.length > 0" class="mat-chip-list-stacked">
+                <md-chip *ngFor="let apiResource of apiProject.apiResources"
+                  selected="true"
+                  color="primary">
+                  {{apiResource.name}}
+                </md-chip>
+              </md-chip-list>
+            </md-card-content>
+            <md-card-actions>
+              <a md-raised-button (click)="gotoProjectConfig(apiProject.id)">CONFIGURE</a>
+              <a color="primary" md-button (click)="gotoProjectLauncher(apiProject.id)">START</a>
+            </md-card-actions>
+          </md-card>
+        </md-grid-tile>
+      </md-grid-list>
+    </md-card-content>
+  </md-card>
+
+<p>
+  <span *ngIf="apiProjects"> {{ apiProjects | json }}</span>
+</p>
+</span>
