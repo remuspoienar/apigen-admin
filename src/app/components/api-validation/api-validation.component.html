@@ -1,0 +1,16 @@
+<md-card>
+    <md-card-content>
+        <button class="pull-right" md-icon-button color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
+
+        <md-input-container>
+            <input name="validationTrait" mdInput [(ngModel)]="apiValidation.trait" placeholder="Validation trait" required #vTrait="ngModel">
+        </md-input-container>
+
+        <md-input-container>
+            <textarea name="validationAdvancedOptions" mdInput rows="1" [(ngModel)]="apiValidation.advancedOptions" placeholder="Validation advanced options"
+                #vAdvancedOptions="ngModel"></textarea>
+        </md-input-container>
+
+    </md-card-content>
+</md-card>
+<br>

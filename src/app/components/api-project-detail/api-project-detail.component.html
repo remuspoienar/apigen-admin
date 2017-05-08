@@ -1,0 +1,41 @@
+<br>
+<md-card class="center one-half">
+    <md-card-header class="center-card-header text-center">
+        <md-card-title>{{ apiProject.name }}</md-card-title>
+        <md-card-subtitle>{{ currentUser.name }}</md-card-subtitle>
+        <md-card-subtitle>{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
+    </md-card-header>
+    <div class="center text-center">
+        <button md-raised-button color="warn" (click)="deleteProject()"><md-icon>delete</md-icon>DELETE</button>
+        <button md-raised-button color="primary" (click)="goBackToProjects()">ALL PROJECTS</button>
+    </div>
+    <md-card-content>
+        <br>
+        <form #theForm="ngForm">
+            <md-input-container>
+                <input name="projectName" mdInput [(ngModel)]="apiProject.name" placeholder="Project name" required #pName="ngModel">
+            </md-input-container>
+            <br>
+            <!--<md-card>
+                <md-card-header>
+                    <md-card-title>Resources</md-card-title>
+                    <md-card-subtitle>What resources should this API manage?</md-card-subtitle>
+                </md-card-header>-->
+            <!--<md-card-content>-->
+            <p>Resources</p>
+            <p>
+                What resources should this API manage?
+                <button md-button color="primary" (click)="addNewResource()"><md-icon>add</md-icon>NEW</button>
+            </p>
+            <br>
+            <api-resource *ngFor="let resource of apiProject.apiResources" (delete)="deleteResource(apiProject.apiResources.indexOf(resource))"
+                [apiResource]="resource"></api-resource>
+            <!--</md-card-content>-->
+            <!--</md-card>-->
+            <md-card-actions>
+                <button md-raised-button color="primary" [disabled]="!theForm.valid || isWithoutResources()" (click)="updateProject()">UPDATE</button>
+            </md-card-actions>
+        </form>
+
+    </md-card-content>
+</md-card>

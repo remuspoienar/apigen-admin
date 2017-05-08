@@ -4,6 +4,10 @@ h1 {
   font-size: 250%;
 }
 
+.pull-right {
+  float: right;
+}
+
 .auth-card-header > div.mat-card-header-text {
   margin: auto;  
 }

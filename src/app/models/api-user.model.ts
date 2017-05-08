@@ -25,6 +25,10 @@ export class ApiUser {
         return this._apiProjects;
     }
 
+    getProject(id: number): ApiProject {
+        return this._apiProjects.find(apiProject => apiProject.id === id);
+    }
+
     createApiProjects(data: Array<Object>) {
         let apiProject;
         data.forEach((apiProjectAttributes: Object) => {

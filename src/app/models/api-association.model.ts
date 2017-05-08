@@ -14,7 +14,7 @@ export class ApiAssociation {
         this.resourceName = attributes['resource_name'];
         this.resourceLabel = attributes['resource_label'];
         this.kind = attributes['kind'];
-        this.advancedOptions = JSON.parse(attributes['advanced_options']);
+        this.advancedOptions = attributes['advanced_options'];
 
         if (attributes.hasOwnProperty('api_resource')) {
             this.apiResourceId = (new ApiResource(attributes['api_resource'])).id;
