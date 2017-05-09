@@ -11,7 +11,7 @@ export class ApiValidation {
     constructor(attributes: Object) {
         this.id = attributes['id'];
         this.trait = attributes['trait'];
-        this.advancedOptions = JSON.parse(attributes['advanced_options']);
+        this.advancedOptions = attributes['advanced_options'];
 
         if (attributes.hasOwnProperty('api_attribute')) {
             this.apiAttributeId = (new ApiAttribute(attributes['api_attribute'])).id;

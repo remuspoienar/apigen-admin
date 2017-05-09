@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
         if (ApiUser.current === null) {
             this._router.navigate(['signin']);
         } else {
+            if(ApiUser.current.apiProjects.length > 0) return;
             this.fetchApiProjects();
         }
     }
@@ -46,15 +47,15 @@ export class DashboardComponent implements OnInit {
     }
 
     gotoNewProject() {
-
+        this._router.navigate(['/api-projects', 'new'])
     }
 
     gotoProjectConfig(apiProjectId: number) {
-
+        this._router.navigate(['/api-projects', apiProjectId])
     }
 
     gotoProjectLauncher(apiProjectId: number) {
-
+        this._router.navigate(['/api-project-launchers', apiProjectId])
     }
 
 

@@ -1,0 +1,27 @@
+<md-card>
+    <md-card-content>
+        <button md-icon-button class="pull-right" color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
+
+        <md-input-container>
+            <input name="attributeName" mdInput [(ngModel)]="apiAttribute.name" placeholder="Attribute name" required #aName="ngModel">
+        </md-input-container>
+
+        <md-input-container>
+            <input name="attributeDbType" mdInput [(ngModel)]="apiAttribute.dbType" placeholder="Attribute database type" required #aDbType="ngModel">
+        </md-input-container>
+
+        <br>
+
+        <p>
+            <span *ngIf="apiAttribute.apiValidations.length === 0">
+                NO
+            </span> Attribute validations for {{ apiAttribute.name }}
+            <button md-button color="primary" (click)="addNewValidation()"><md-icon>add</md-icon>NEW</button>
+        </p>
+
+        <api-validation *ngFor="let validation of apiAttribute.apiValidations" (delete)="deleteValidation(apiAttribute.apiValidations.indexOf(validation))"
+            [apiValidation]="validation"></api-validation>
+
+    </md-card-content>
+</md-card>
+<br>
