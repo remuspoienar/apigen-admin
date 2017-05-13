@@ -26,7 +26,7 @@ export class AuthenticationService {
         if (authToken === null) return null;
 
         let options = this.DEFAULT_OPTIONS;
-        options.headers.append('Authorization', authToken);
+        if (!options.headers.get('Authorization')) options.headers.append('Authorization', authToken);
         return this._http.get('http://localhost:3003/me', options)
             .map(this.handleUserData)
             .catch(this.handleError);

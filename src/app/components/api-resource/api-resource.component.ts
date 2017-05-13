@@ -22,7 +22,12 @@ export class ApiResourceComponent {
     }
 
     deleteAssociation(index: number) {
-        this.apiResource.apiAssociations.splice(index, 1);
+        let association = this.apiResource.apiAssociations[index];
+        if (association.id) {
+            association.markAsRemoved();
+        } else {
+            this.apiResource.apiAssociations.splice(index, 1);
+        }
     }
 
     addNewAttribute() {
@@ -31,7 +36,13 @@ export class ApiResourceComponent {
     }
 
     deleteAttribute(index: number) {
-        this.apiResource.apiAttributes.splice(index, 1);
+        let attribute = this.apiResource.apiAttributes[index];
+        if (attribute.id) {
+            attribute.markAsRemoved();
+        } else {
+            this.apiResource.apiAttributes.splice(index, 1);
+        }
+
     }
 
 }

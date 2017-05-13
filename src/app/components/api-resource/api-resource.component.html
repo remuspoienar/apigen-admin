@@ -1,37 +1,39 @@
-<md-card>
-    <md-card-content>
-        <button md-icon-button class="pull-right" color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
+<span *ngIf="!apiResource.isMarkedAsDeleted">
+    <md-card>
+        <md-card-content>
+            <button md-icon-button class="pull-right" color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
 
-        <md-input-container>
-            <input name="resourceName" mdInput [(ngModel)]="apiResource.name" placeholder="Resource name" required #rName="ngModel">
-        </md-input-container>
+            <md-input-container>
+                <input name="resourceName" mdInput [(ngModel)]="apiResource.name" placeholder="Resource name" required #rName="ngModel">
+            </md-input-container>
 
-        <br>
+            <br>
 
-        <p>
-            <span *ngIf="apiResource.apiAttributes.length === 0">
-            NO 
-            </span> Attributes for {{ apiResource.name }}
-            <button md-button color="primary" (click)="addNewAttribute()"><md-icon>add</md-icon>NEW</button>
-        </p>
-        <br>
-
-        <api-attribute *ngFor="let attribute of apiResource.apiAttributes" (delete)="deleteAttribute(apiResource.apiAttributes.indexOf(attribute))"
-            [apiAttribute]="attribute"></api-attribute>
-
-        <br>
-
-        <p>
-            <span *ngIf="apiResource.apiAssociations.length === 0">
+            <p>
+                <span *ngIf="apiResource.apiAttributes.length === 0">
                 NO 
-            </span> Associations for {{ apiResource.name }}
-            <button md-button color="primary" (click)="addNewAssociation()"><md-icon>add</md-icon>NEW</button>
-        </p>
-        <br>
+                </span> Attributes for {{ apiResource.name }}
+                <button md-button color="primary" (click)="addNewAttribute()"><md-icon>add</md-icon>NEW</button>
+            </p>
+            <br>
 
-        <api-association *ngFor="let association of apiResource.apiAssociations" (delete)="deleteAssociation(apiResource.apiAssociations.indexOf(association))"
-            [apiAssociation]="association"></api-association>
+            <api-attribute *ngFor="let attribute of apiResource.apiAttributes" (delete)="deleteAttribute(apiResource.apiAttributes.indexOf(attribute))"
+                [apiAttribute]="attribute"></api-attribute>
 
-    </md-card-content>
-</md-card>
-<br>
+            <br>
+
+            <p>
+                <span *ngIf="apiResource.apiAssociations.length === 0">
+                    NO 
+                </span> Associations for {{ apiResource.name }}
+                <button md-button color="primary" (click)="addNewAssociation()"><md-icon>add</md-icon>NEW</button>
+            </p>
+            <br>
+
+            <api-association *ngFor="let association of apiResource.apiAssociations" (delete)="deleteAssociation(apiResource.apiAssociations.indexOf(association))"
+                [apiAssociation]="association"></api-association>
+
+        </md-card-content>
+    </md-card>
+    <br>
+</span>

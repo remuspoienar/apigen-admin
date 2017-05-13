@@ -1,12 +1,12 @@
 <br>
-<md-card class="center one-half">
+<md-card *ngIf="apiProject" class="center one-half">
     <md-card-header class="center-card-header text-center">
-        <md-card-title>{{ apiProject.name }}</md-card-title>
-        <md-card-subtitle>{{ currentUser.name }}</md-card-subtitle>
-        <md-card-subtitle>{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
+        <md-card-title>{{ apiProject.name ? apiProject.name :  (formAction === "create") ? "(NEW PROJECT)" : "" }}</md-card-title>
+        <md-card-subtitle>created by {{ currentUser.name }}</md-card-subtitle>
+        <md-card-subtitle *ngIf="apiProject.createdAt">{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
     </md-card-header>
     <div class="center text-center">
-        <button md-raised-button color="warn" (click)="deleteProject()"><md-icon>delete</md-icon>DELETE</button>
+        <button *ngIf="formAction === 'update'" md-raised-button color="warn" (click)="deleteProject()"><md-icon>delete</md-icon>DELETE</button>
         <button md-raised-button color="primary" (click)="goBackToProjects()">ALL PROJECTS</button>
     </div>
     <md-card-content>
@@ -33,9 +33,11 @@
             <!--</md-card-content>-->
             <!--</md-card>-->
             <md-card-actions>
-                <button md-raised-button color="primary" [disabled]="!theForm.valid || isWithoutResources()" (click)="updateProject()">UPDATE</button>
+                <button md-raised-button color="primary" [disabled]="!theForm.valid" (click)="onFormActionClick()">{{ formAction | uppercase }}</button>
             </md-card-actions>
         </form>
 
     </md-card-content>
 </md-card>
+
+<p *ngIf="apiProject">{{ apiProject.asApiRequestFormat() | json }}</p>

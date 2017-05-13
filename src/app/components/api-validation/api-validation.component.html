@@ -1,16 +1,23 @@
-<md-card>
-    <md-card-content>
-        <button class="pull-right" md-icon-button color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
+<span *ngIf="!apiValidation.isMarkedAsDeleted">
+    <md-card>
+        <md-card-content>
+            <button class="pull-right" md-icon-button color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
 
-        <md-input-container>
-            <input name="validationTrait" mdInput [(ngModel)]="apiValidation.trait" placeholder="Validation trait" required #vTrait="ngModel">
-        </md-input-container>
+            <md-select required #vTrait="ngModel" placeholder="Validation trait" [(ngModel)]="apiValidation.trait" name="validationTrait">
+                <md-option *ngFor="let option of options" [value]="option">
+                    {{ option | uppercase }}
+                </md-option>
+            </md-select>
 
-        <md-input-container>
-            <textarea name="validationAdvancedOptions" mdInput rows="1" [(ngModel)]="apiValidation.advancedOptions" placeholder="Validation advanced options"
-                #vAdvancedOptions="ngModel"></textarea>
-        </md-input-container>
+            <span *ngIf="traitFields && traitFields.length > 0">
+                <p>Advanced options for {{ apiValidation.trait }}</p>
 
-    </md-card-content>
-</md-card>
-<br>
+                <md-input-container *ngFor="let field of traitFields">
+                    <input [name]="field" mdInput [(ngModel)]="apiValidation.advancedOptions[field]" [placeholder]="field" required >
+                </md-input-container>
+            </span>
+
+        </md-card-content>
+    </md-card>
+    <br>
+</span>

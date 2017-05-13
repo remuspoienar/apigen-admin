@@ -1,24 +1,43 @@
-import { Component, Input, Output, OnInit } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ApiUser } from '../../models/api-user.model';
 import { ApiProject } from '../../models/api-project.model';
+import { ApiResource } from '../../models/api-resource.model';
+import { ApiDataService } from '../../services/api-data.service';
 
 @Component({
     selector: 'new-api-project',
-    templateUrl: './new-api-project.component.html',
-    styleUrls: ['./new-api-project.component.css']
+    templateUrl: './../api-project-detail/api-project-detail.component.html',
+    styleUrls: ['./../api-project-detail/api-project-detail.component.css']
 })
-export class NewApiProjectComponent implements OnInit {
+export class NewApiProjectComponent {
 
     constructor(
+        private _apiData: ApiDataService,
         private _router: Router,
         private route: ActivatedRoute) { }
 
-    apiProject: ApiProject;
+    apiProject: ApiProject = new ApiProject({});
+    formAction: string = 'create';
 
-    ngOnInit() {
-        // this.route.params
-            // .subscribe((params: Params) => this.apiProject = ApiUser.current.getProject(+params['id']));
+    get currentUser(): ApiUser {
+        return ApiUser.current;
+    }
+
+    addNewResource() {
+        this.apiProject.apiResources.unshift(new ApiResource({}));
+    }
+
+    deleteResource(index: number) {
+        this.apiProject.apiResources.splice(index, 1);
+    }
+
+    goBackToProjects() {
+        this._router.navigate(['/dashboard']);
+    }
+
+    onFormActionClick() {
+        this._apiData.createProject(this.apiProject).subscribe(data => this.goBackToProjects(), error => console.log(error));;
     }
 
 }

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ApiUser } from '../../models/api-user.model';
 import { ApiProject } from '../../models/api-project.model';
 import { ApiResource } from '../../models/api-resource.model';
+import { ApiDataService } from '../../services/api-data.service';
 
 @Component({
     selector: 'api-project-detail',
@@ -12,18 +13,20 @@ import { ApiResource } from '../../models/api-resource.model';
 export class ApiProjectDetailComponent implements OnInit {
 
     constructor(
+        private _apiData: ApiDataService,
         private _router: Router,
         private route: ActivatedRoute) { }
 
-    apiProject: ApiProject;
+    apiProject: ApiProject = null;
+    formAction: string = 'update';
 
     get currentUser(): ApiUser {
         return ApiUser.current;
     }
 
     ngOnInit() {
-        this.route.params
-            .subscribe((params: Params) => this.apiProject = ApiUser.current.getProject(+params['id']));
+        let id = +this.route.snapshot.params['id'];
+        this._apiData.fetchApiProject(id).subscribe(data => this.apiProject = new ApiProject(data), error => console.log(error));
     }
 
     deleteProject() {
@@ -35,20 +38,26 @@ export class ApiProjectDetailComponent implements OnInit {
     }
 
     deleteResource(index: number) {
-        this.apiProject.apiResources.splice(index, 1);
+        let resource = this.apiProject.apiResources[index];
+        if (resource.id) {
+            resource.markAsRemoved();
+        } else {
+            this.apiProject.apiResources.splice(index, 1);
+        }
+
     }
 
     goBackToProjects() {
-        window.history.back();
-        // this._router.navigate(['/dashboard']);
+        // window.history.back();
+        this._router.navigate(['/dashboard']);
     }
 
-    updateProject() {
-
+    onFormActionClick() {
+        this._apiData.updateProject(this.apiProject).subscribe(data => this.goBackToProjects(), error => console.log(error));
     }
 
-    isWithoutResources(): boolean {
-        return this.apiProject.apiResources.length === 0;
+    saveToLocalStorage(key: string, data: string) {
+        localStorage.setItem(key, data);
     }
 }
 

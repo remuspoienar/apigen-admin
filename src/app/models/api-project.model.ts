@@ -33,4 +33,13 @@ export class ApiProject {
         });
 
     }
+
+    asApiRequestFormat() {
+        let result = {};
+        if (this.name) result['name'] = this.name;
+        if (this.apiResources.length > 0) {
+            result['api_resources_attributes'] = this.apiResources.map(resource => resource.asApiRequestFormat())
+        }
+        return result;
+    }
 }

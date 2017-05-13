@@ -44,3 +44,6 @@ h1 {
 .one-third {
     width: 30%;
 }
+
+/* material fixes */
+.mat-select-placeholder.mat-floating-placeholder {transform: scale(.75) translateY(7px) !important;}
