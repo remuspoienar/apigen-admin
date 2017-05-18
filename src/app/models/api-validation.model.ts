@@ -16,7 +16,7 @@ export class ApiValidation {
         this.advancedOptions = JSON.parse(attributes['advanced_options'] || '{}');
 
         if (attributes.hasOwnProperty('api_attribute')) {
-            this.apiAttributeId = (new ApiAttribute(attributes['api_attribute'])).id;
+            this.apiAttributeId = attributes['api_attribute']['id'];
         }
 
     }

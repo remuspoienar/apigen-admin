@@ -26,7 +26,6 @@ export class DashboardComponent implements OnInit {
         if (ApiUser.current === null) {
             this._router.navigate(['signin']);
         } else {
-            if(ApiUser.current.apiProjects.length > 0) return;
             this.fetchApiProjects();
         }
     }

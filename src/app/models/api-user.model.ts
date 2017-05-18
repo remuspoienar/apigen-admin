@@ -30,6 +30,7 @@ export class ApiUser {
     }
 
     createApiProjects(data: Array<Object>) {
+        this._apiProjects = [];
         let apiProject;
         data.forEach((apiProjectAttributes: Object) => {
             apiProject = new ApiProject(apiProjectAttributes);

@@ -10,13 +10,15 @@ export class ApiProject {
     createdAt: string;
     apiResources: Array<ApiResource> = [];
 
+    private static _current: ApiProject;
+
     constructor(attributes: Object) {
         this.id = attributes['id'];
         this.name = attributes['name'];
         this.createdAt = attributes['created_at'];
 
         if (attributes.hasOwnProperty('created_by')) {
-            this.createdById = (new ApiUser(attributes['created_by'])).id;
+            this.createdById = attributes['created_by']['id'];
         }
 
         if (attributes.hasOwnProperty('api_resources')) {
@@ -41,5 +43,17 @@ export class ApiProject {
             result['api_resources_attributes'] = this.apiResources.map(resource => resource.asApiRequestFormat())
         }
         return result;
+    }
+
+    get resourceNames() {
+        return this.apiResources.map(resource => resource.name);
+    }
+
+    static get current(): ApiProject {
+        return this._current;
+    }
+
+    static set current(apiProject: ApiProject) {
+        this._current = apiProject;
     }
 }

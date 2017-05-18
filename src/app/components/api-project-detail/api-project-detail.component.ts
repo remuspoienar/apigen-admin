@@ -26,11 +26,14 @@ export class ApiProjectDetailComponent implements OnInit {
 
     ngOnInit() {
         let id = +this.route.snapshot.params['id'];
-        this._apiData.fetchApiProject(id).subscribe(data => this.apiProject = new ApiProject(data), error => console.log(error));
+        this._apiData.fetchApiProject(id).subscribe(data => {
+            this.apiProject = new ApiProject(data);
+            ApiProject.current = this.apiProject;
+        }, error => console.log(error));
     }
 
     deleteProject() {
-
+        this._apiData.deleteProject(this.apiProject.id).subscribe(data => this.goBackToProjects(), error => console.log(error));
     }
 
     addNewResource() {

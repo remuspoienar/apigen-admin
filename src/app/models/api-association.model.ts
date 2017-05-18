@@ -19,7 +19,7 @@ export class ApiAssociation {
         this.advancedOptions = JSON.parse(attributes['advanced_options'] || '{}');
 
         if (attributes.hasOwnProperty('api_resource')) {
-            this.apiResourceId = (new ApiResource(attributes['api_resource'])).id;
+            this.apiResourceId = attributes['api_resource']['id'];
         }
     }
 

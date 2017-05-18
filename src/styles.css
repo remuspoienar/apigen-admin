@@ -47,3 +47,27 @@ h1 {
 
 /* material fixes */
 .mat-select-placeholder.mat-floating-placeholder {transform: scale(.75) translateY(7px) !important;}
+
+md-select > .mat-select-trigger > span.mat-select-underline {
+    margin-bottom: -9px;
+}
+
+md-select > .mat-select-trigger > .mat-select-value {
+    margin-top: 25px;
+}
+
+md-select > .mat-select-trigger > .mat-select-placeholder {
+    margin-top: 25px;
+}
+
+md-select[name="associationKind"] {
+    width: 40%;
+}
+
+md-select[name="associationResourceLabel"] {
+    width: 30%;
+}
+
+md-input-container.projectName {
+    width: 30%;
+}

@@ -19,7 +19,7 @@ export class ApiAttribute {
         this.dbType = attributes['db_type'];
 
         if (attributes.hasOwnProperty('api_resource')) {
-            this.apiResourceId = (new ApiResource(attributes['api_resource'])).id;
+            this.apiResourceId = attributes['api_resource']['id'];
         }
 
         if (attributes.hasOwnProperty('api_validations')) {

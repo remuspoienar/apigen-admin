@@ -31,7 +31,7 @@
             <br>
 
             <api-association *ngFor="let association of apiResource.apiAssociations" (delete)="deleteAssociation(apiResource.apiAssociations.indexOf(association))"
-                [apiAssociation]="association"></api-association>
+                [apiAssociation]="association" [apiResource]="apiResource"></api-association>
 
         </md-card-content>
     </md-card>

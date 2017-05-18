@@ -3,24 +3,27 @@
         <md-card-content>
             <button class="pull-right" md-icon-button color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
 
-            <md-input-container>
-                <input name="associationResourceName" mdInput [(ngModel)]="apiAssociation.resourceName" placeholder="Associated resource name"
-                    required #asResourceName="ngModel">
-            </md-input-container>
+             <md-select required #asResourceName="ngModel" placeholder="Associated resource name" [(ngModel)]="apiAssociation.resourceName" name="associationResourceName">
+                <md-option *ngFor="let resourceName of allResourceNames" [value]="resourceName">
+                    {{ resourceName }}
+                </md-option>
+            </md-select>
 
-            <md-input-container>
+             <md-input-container>
                 <input name="associationResourceLabel" mdInput [(ngModel)]="apiAssociation.resourceLabel" placeholder="Label/alias for that resource name"
                     required #asResourceLabel="ngModel">
             </md-input-container>
 
-            <md-input-container>
-                <input name="associationKind" mdInput [(ngModel)]="apiAssociation.kind" placeholder="Kind of association" required #asKind="ngModel">
-            </md-input-container>
+            <md-select required #asKind="ngModel" [disabled]="!asResourceLabel.value" placeholder="Kind of association" [(ngModel)]="apiAssociation.kind" name="associationKind">
+                <md-option *ngFor="let kind of kindOptions" [value]="kind">
+                    {{ textForKind(kind) }}
+                </md-option>
+            </md-select>
 
-            <md-input-container>
+            <!--<md-input-container>
                 <textarea name="associationAdvancedOptions" mdInput rows="1" [(ngModel)]="apiAssociation.advancedOptions" placeholder="Advanced options for this association"
                     #asAdvancedOptions="ngModel"></textarea>
-            </md-input-container>
+            </md-input-container>-->
 
         </md-card-content>
     </md-card>

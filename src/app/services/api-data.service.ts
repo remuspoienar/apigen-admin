@@ -50,7 +50,9 @@ export class ApiDataService {
     }
 
     deleteProject(id: number) {
-        
+        return this._http.delete(`http://localhost:3003/api/v1/api_projects/${id}`, this.optionsWithAuthHeader())
+            .map(this.handleData)
+            .catch(this.handleError);
     }
 
     fetchDbTypeOptions() {

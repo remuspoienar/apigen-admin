@@ -19,7 +19,7 @@ export class ApiResource {
         this.name = attributes['name'];
 
         if (attributes.hasOwnProperty('api_project')) {
-            this.apiProjectId = (new ApiProject(attributes['api_project'])).id;
+            this.apiProjectId = attributes['api_project']['id'];
         }
 
         if (attributes.hasOwnProperty('api_attributes')) {

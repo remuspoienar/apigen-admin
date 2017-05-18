@@ -1,7 +1,7 @@
 <br>
 <md-card *ngIf="apiProject" class="center one-half">
     <md-card-header class="center-card-header text-center">
-        <md-card-title>{{ apiProject.name ? apiProject.name :  (formAction === "create") ? "(NEW PROJECT)" : "" }}</md-card-title>
+        <md-card-title>{{ apiProject.name ? apiProject.name : (formAction === "create") ? "(NEW PROJECT)" : "" }}</md-card-title>
         <md-card-subtitle>created by {{ currentUser.name }}</md-card-subtitle>
         <md-card-subtitle *ngIf="apiProject.createdAt">{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
     </md-card-header>
@@ -12,7 +12,7 @@
     <md-card-content>
         <br>
         <form #theForm="ngForm">
-            <md-input-container>
+            <md-input-container class="projectName">
                 <input name="projectName" mdInput [(ngModel)]="apiProject.name" placeholder="Project name" required #pName="ngModel">
             </md-input-container>
             <br>
