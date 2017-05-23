@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 // material design dependencies
 import { MaterialModule } from '@angular/material';
@@ -67,7 +68,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [BrowserModule, MaterialModule, FormsModule, BrowserAnimationsModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, MaterialModule, FormsModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HttpModule],
   declarations: [
     AppComponent,
     SigninComponent,

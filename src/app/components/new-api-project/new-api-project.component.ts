@@ -15,9 +15,12 @@ export class NewApiProjectComponent {
     constructor(
         private _apiData: ApiDataService,
         private _router: Router,
-        private route: ActivatedRoute) { }
+        private route: ActivatedRoute) {
+          this.apiProject = new ApiProject({});
+          ApiProject.current = this.apiProject;
+        }
 
-    apiProject: ApiProject = new ApiProject({});
+    apiProject: ApiProject;
     formAction: string = 'create';
 
     get currentUser(): ApiUser {
@@ -41,4 +44,3 @@ export class NewApiProjectComponent {
     }
 
 }
-
