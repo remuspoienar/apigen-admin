@@ -67,6 +67,24 @@ export class ApiDataService {
             .catch(this.handleError);
     }
 
+    launchApiProject(id: number) {
+      return this._http.get(`http://localhost:3003/api/v1/launch_project/${id}`, this.optionsWithAuthHeader())
+          .map(this.handleData)
+          .catch(this.handleError);
+    }
+
+    shutDownApiProject(id: number) {
+      return this._http.get(`http://localhost:3003/api/v1/shutdown_project/${id}`, this.optionsWithAuthHeader())
+          .map(this.handleData)
+          .catch(this.handleError);
+    }
+
+    getResourceRecords(pluralizedResource: string) {
+      return this._http.get(`http://localhost:4000/${pluralizedResource}`, this.optionsWithAuthHeader())
+          .map(this.handleData)
+          .catch(this.handleError);
+    }
+
     private optionsWithAuthHeader() {
         let authToken = localStorage.getItem('authToken');
         let options = this.DEFAULT_OPTIONS;

@@ -9,11 +9,11 @@ h1 {
 }
 
 .auth-card-header > div.mat-card-header-text {
-  margin: auto;  
+  margin: auto;
 }
 
 .center-card-header > div.mat-card-header-text {
-  margin: auto;  
+  margin: auto;
 }
 
 .example-fill-remaining-space {
@@ -26,7 +26,7 @@ h1 {
 }
 
 .center {
-  margin: auto;  
+  margin: auto;
 }
 
 .text-center {
@@ -70,4 +70,8 @@ md-select[name="associationResourceLabel"] {
 
 md-input-container.projectName {
     width: 30%;
+}
+
+md-input-container.width-60-percent {
+  width: 60%;
 }

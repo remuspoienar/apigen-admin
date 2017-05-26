@@ -1,0 +1,4 @@
+<md-input-container class="width-60-percent">
+    <input [name]="(apiResource.name | lowercase) + (apiAttribute.name | capitalize)" mdInput [(ngModel)]="apiResource[apiAttribute.name]" [placeholder]="apiResource.name + ' ' + apiAttribute.name">
+</md-input-container>
+<br />

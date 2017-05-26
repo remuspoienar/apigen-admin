@@ -1,7 +1,7 @@
 // angular basic dependencies
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
@@ -24,10 +24,16 @@ import { ApiResourceComponent } from './components/api-resource/api-resource.com
 import { ApiAttributeComponent } from './components/api-attribute/api-attribute.component';
 import { ApiValidationComponent } from './components/api-validation/api-validation.component';
 import { ApiAssociationComponent } from './components/api-association/api-association.component';
+import { ResourceDetailComponent } from './components/resource-detail/resource-detail.component';
+import { AttributeInputComponent } from './components/attribute-input/attribute-input.component';
+import { AssociationInputComponent } from './components/association-input/association-input.component';
 
-//services
+// services
 import { ApiDataService } from './services/api-data.service';
 import { AuthenticationService } from './services/authentication.service';
+
+// custom pipes
+import {CapitalizePipe} from "./pipes/capitalize.pipe";
 
 // routes config
 const routes: Routes = [
@@ -68,7 +74,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [BrowserModule, MaterialModule, FormsModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HttpModule],
+  imports: [BrowserModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HttpModule],
   declarations: [
     AppComponent,
     SigninComponent,
@@ -81,7 +87,11 @@ const routes: Routes = [
     ApiResourceComponent,
     ApiAttributeComponent,
     ApiValidationComponent,
-    ApiAssociationComponent
+    ApiAssociationComponent,
+    ResourceDetailComponent,
+    AttributeInputComponent,
+    AssociationInputComponent,
+    CapitalizePipe
   ],
   providers: [AuthenticationService, ApiDataService],
   bootstrap: [AppComponent]

@@ -5,6 +5,7 @@ export class ApiAssociation {
     resourceName: string;
     resourceLabel: string;
     kind: string;
+    mandatory: boolean;
     advancedOptions: Object;
 
     apiResourceId: number = null;
@@ -17,6 +18,7 @@ export class ApiAssociation {
         this.resourceLabel = attributes['resource_label'];
         this.kind = attributes['kind'];
         this.advancedOptions = JSON.parse(attributes['advanced_options'] || '{}');
+        this.mandatory = attributes['mandatory'];
 
         if (attributes.hasOwnProperty('api_resource')) {
             this.apiResourceId = attributes['api_resource']['id'];
@@ -29,6 +31,7 @@ export class ApiAssociation {
         if (this.resourceName) result['resource_name'] = this.resourceName;
         if (this.resourceLabel) result['resource_label'] = this.resourceLabel;
         if (this.kind) result['kind'] = this.kind;
+        if (this.mandatory !== undefined ) result['mandatory'] = this.mandatory;
         if (this.advancedOptions) result['advanced_options'] = JSON.stringify(this.advancedOptions);
         if (this._delete) result['_destroy'] = true;
         return result;

@@ -20,6 +20,8 @@
                 </md-option>
             </md-select>
 
+            <md-checkbox color="warn" align="start" [(ngModel)]="apiAssociation.mandatory">{{textForMandatory()}}</md-checkbox>
+
             <!--<md-input-container>
                 <textarea name="associationAdvancedOptions" mdInput rows="1" [(ngModel)]="apiAssociation.advancedOptions" placeholder="Advanced options for this association"
                     #asAdvancedOptions="ngModel"></textarea>

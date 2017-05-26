@@ -1,0 +1,11 @@
+<md-input-container class="width-60-percent">
+  <input mdInput [placeholder]="ownerAttributeName()" [mdAutocomplete]="auto" [formControl]="ownerCtrl">
+</md-input-container>
+
+<md-autocomplete #auto="mdAutocomplete">
+  <md-option *ngFor="let owner of filteredOwners | async" [value]="owner.id">
+    {{ owner.id }} : {{ optionDetail(owner) | json }}
+  </md-option>
+</md-autocomplete>
+
+<br />

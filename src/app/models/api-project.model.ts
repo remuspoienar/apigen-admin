@@ -8,6 +8,8 @@ export class ApiProject {
     name: string;
     createdById: number;
     createdAt: string;
+    launched: boolean;
+
     apiResources: Array<ApiResource> = [];
 
     private static _current: ApiProject;
@@ -16,6 +18,7 @@ export class ApiProject {
         this.id = attributes['id'];
         this.name = attributes['name'];
         this.createdAt = attributes['created_at'];
+        this.launched = attributes['launched'];
 
         if (attributes.hasOwnProperty('created_by')) {
             this.createdById = attributes['created_by']['id'];

@@ -1,0 +1,15 @@
+<span *ngIf="apiResource">
+  <form #theForm="ngForm" class="center one-half">
+    <br />
+    New {{ apiResource.name }} attributes
+    <hr />
+    <br />
+
+    <attribute-input *ngFor="let attribute of apiResource.apiAttributes" [apiAttribute]="attribute" [apiResource]="apiResource"></attribute-input>
+
+    <association-input *ngFor="let association of apiResource.reverseAssociations" [reverseAssociation]="association" [apiResource]="apiResource"></association-input>
+
+    <br />
+    <button md-raised-button color="primary" [disabled]="!theForm.valid" (click)="onFormActionClick()">CREATE {{apiResource.name | uppercase }}</button>
+  </form>
+</span>

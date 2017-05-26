@@ -11,6 +11,7 @@ export class ApiResource {
 
     apiAttributes: Array<ApiAttribute> = [];
     apiAssociations: Array<ApiAssociation> = [];
+    reverseAssociations: Array<Object> = [];
 
     private _delete: boolean = null;
 
@@ -28,6 +29,10 @@ export class ApiResource {
 
         if (attributes.hasOwnProperty('api_associations')) {
             this.createApiAssociations(attributes['api_associations']);
+        }
+
+        if (attributes.hasOwnProperty('reverse_associations')) {
+          this.reverseAssociations = attributes['reverse_associations']
         }
     }
 
@@ -70,4 +75,4 @@ export class ApiResource {
     get isMarkedAsDeleted() {
         return this._delete;
     }
-} 
+}

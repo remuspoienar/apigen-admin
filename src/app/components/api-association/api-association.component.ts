@@ -23,6 +23,13 @@ export class ApiAssociationComponent {
         return ["has_many", "has_one", "belongs_to"];
     }
 
+    textForMandatory() {
+      let label = this.apiAssociation.resourceLabel;
+      if (label === undefined || label.length === 0) return 'MANDATORY';
+      let otherLabel = this.apiResource.name.toLowerCase();
+      return `Every ${inflector.singularize(label)} requires that ${this.articledWithSeparator(otherLabel, 'extra', false)} reference for this association exists`;
+    }
+
     textForKind(kind: string) {
         let label = this.apiAssociation.resourceLabel;
         if (label === undefined || label.length === 0) return [{'text': '', 'value': ''}];
@@ -36,7 +43,7 @@ export class ApiAssociationComponent {
         } else {
             return 'N/A';
         }
-        
+
     }
 
     emitDelete() {
@@ -48,4 +55,9 @@ export class ApiAssociationComponent {
         if (name[0].match(/[aeiou]/)) article = article.concat('n');
         return article.concat(' ', name);
     }
-}     
+
+    articledWithSeparator(name: string, separator: string, boolean = false) {
+      let articled = this.articled(name, boolean);
+      return articled.split(' ').join(` ${separator} `);
+    }
+}
