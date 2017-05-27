@@ -9,6 +9,7 @@ export class ApiProject {
     createdById: number;
     createdAt: string;
     launched: boolean;
+    apiHost: string;
 
     apiResources: Array<ApiResource> = [];
 
@@ -19,6 +20,7 @@ export class ApiProject {
         this.name = attributes['name'];
         this.createdAt = attributes['created_at'];
         this.launched = attributes['launched'];
+        this.apiHost = attributes['api_host'];
 
         if (attributes.hasOwnProperty('created_by')) {
             this.createdById = attributes['created_by']['id'];

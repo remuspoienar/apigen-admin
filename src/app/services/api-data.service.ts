@@ -68,21 +68,29 @@ export class ApiDataService {
     }
 
     launchApiProject(id: number) {
-      return this._http.get(`http://localhost:3003/api/v1/launch_project/${id}`, this.optionsWithAuthHeader())
+      return this._http.get(`http://localhost:3003/api/v1/api_projects/${id}/launch`, this.optionsWithAuthHeader())
           .map(this.handleData)
           .catch(this.handleError);
     }
 
     shutDownApiProject(id: number) {
-      return this._http.get(`http://localhost:3003/api/v1/shutdown_project/${id}`, this.optionsWithAuthHeader())
+      return this._http.get(`http://localhost:3003/api/v1/api_projects/${id}/shutdown`, this.optionsWithAuthHeader())
           .map(this.handleData)
           .catch(this.handleError);
     }
 
     getResourceRecords(pluralizedResource: string) {
-      return this._http.get(`http://localhost:4000/${pluralizedResource}`, this.optionsWithAuthHeader())
+      let host = ApiProject.current.apiHost;
+      return this._http.get(`${host}/${pluralizedResource}`, this.optionsWithAuthHeader())
           .map(this.handleData)
           .catch(this.handleError);
+    }
+
+    createResource(pluralizedResource: string, body: Object) {
+      let host = ApiProject.current.apiHost;
+      return this._http.post(`${host}/${pluralizedResource}`, body, this.optionsWithAuthHeader())
+        .map(this.handleData)
+        .catch(this.handleError);
     }
 
     private optionsWithAuthHeader() {

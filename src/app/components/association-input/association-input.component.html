@@ -1,5 +1,5 @@
 <md-input-container class="width-60-percent">
-  <input mdInput [placeholder]="ownerAttributeName()" [mdAutocomplete]="auto" [formControl]="ownerCtrl">
+  <input mdInput [placeholder]="ownerAttributeName()" [(ngModel)]="requestBody[ownerField]" [mdAutocomplete]="auto" [formControl]="ownerCtrl">
 </md-input-container>
 
 <md-autocomplete #auto="mdAutocomplete">

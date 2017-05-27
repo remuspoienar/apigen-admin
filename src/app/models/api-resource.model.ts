@@ -2,6 +2,9 @@ import { ApiProject } from './api-project.model';
 import { ApiAttribute } from './api-attribute.model';
 import { ApiAssociation } from './api-association.model';
 
+let _ = require('lodash');
+let inflector = require('lodash-inflection');
+
 export class ApiResource {
 
     id: number;
@@ -14,6 +17,7 @@ export class ApiResource {
     reverseAssociations: Array<Object> = [];
 
     private _delete: boolean = null;
+    private static _current: ApiResource;
 
     constructor(attributes: Object) {
         this.id = attributes['id'];
@@ -74,5 +78,22 @@ export class ApiResource {
 
     get isMarkedAsDeleted() {
         return this._delete;
+    }
+
+    get tableName() {
+      let downcased = this.name.toLowerCase();
+      return inflector.pluralize(downcased);
+    }
+
+    get formattedName() {
+      return this.name.toLowerCase();
+    }
+
+    static get current(): ApiResource {
+        return this._current;
+    }
+
+    static set current(apiResource: ApiResource) {
+        this._current = apiResource;
     }
 }

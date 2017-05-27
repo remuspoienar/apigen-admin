@@ -55,4 +55,8 @@ export class ApiAttribute {
     get isMarkedAsDeleted() {
         return this._delete;
     }
+
+    get formattedName() {
+      return this.name.toLowerCase().replace(' ','_');
+    }
 }

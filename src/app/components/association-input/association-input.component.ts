@@ -19,6 +19,7 @@ export class AssociationInputComponent implements OnInit {
 
     @Input() reverseAssociation: Object;
     @Input() apiResource: ApiResource;
+    @Input() requestBody: Object;
 
     ownerCtrl: FormControl;
     filteredOwners: any;
@@ -36,6 +37,7 @@ export class AssociationInputComponent implements OnInit {
         this.filteredOwners = this.ownerCtrl.valueChanges
             .startWith(null)
             .map(id => this.filterOwners(id));
+        this.requestBody[this.ownerField] = '';
       }, error => console.log(error));
     }
 
@@ -45,6 +47,10 @@ export class AssociationInputComponent implements OnInit {
 
     ownerAttributeName() {
       return `${this.reverseAssociation['label'].replace('_', ' ')} (id)`
+    }
+
+    get ownerField() {
+      return `${this.reverseAssociation['label']}_id`;
     }
 
     optionDetail(owner: Object) {

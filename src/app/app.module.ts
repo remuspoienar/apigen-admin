@@ -24,9 +24,10 @@ import { ApiResourceComponent } from './components/api-resource/api-resource.com
 import { ApiAttributeComponent } from './components/api-attribute/api-attribute.component';
 import { ApiValidationComponent } from './components/api-validation/api-validation.component';
 import { ApiAssociationComponent } from './components/api-association/api-association.component';
-import { ResourceDetailComponent } from './components/resource-detail/resource-detail.component';
 import { AttributeInputComponent } from './components/attribute-input/attribute-input.component';
 import { AssociationInputComponent } from './components/association-input/association-input.component';
+import { ResourceCrudComponent } from './components/resource-crud/resource-crud.component';
+import { ResourceNewComponent } from './components/resource-crud/resource-new.component';
 
 // services
 import { ApiDataService } from './services/api-data.service';
@@ -88,9 +89,10 @@ const routes: Routes = [
     ApiAttributeComponent,
     ApiValidationComponent,
     ApiAssociationComponent,
-    ResourceDetailComponent,
     AttributeInputComponent,
     AssociationInputComponent,
+    ResourceCrudComponent,
+    ResourceNewComponent,
     CapitalizePipe
   ],
   providers: [AuthenticationService, ApiDataService],
