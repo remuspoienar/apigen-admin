@@ -32,12 +32,12 @@ export class AssociationInputComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._apiData.getResourceRecords(this.apiResource.tableName, {}).subscribe(data => {
-      this.owners = data || [];
+    this.requestBody[this.ownerField] = '';
+    this._apiData.getResourceRecords(this.reverseAssociation['table_name'], {}).subscribe(data => {
+      this.owners = data['rows'] || [];
       this.filteredOwners = this.ownerCtrl.valueChanges
         .startWith(null)
         .map(id => this.filterOwners(id));
-      this.requestBody[this.ownerField] = '';
     }, error => console.log(error));
   }
 

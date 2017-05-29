@@ -10,10 +10,12 @@ import { ApiDataService } from '../../services/api-data.service';
 export class ResourceIndexComponent implements OnInit {
 
   @Input() apiResource: ApiResource;
+  @Output() new: EventEmitter<any> = new EventEmitter();
 
   rows: Array<Object>;
   allColumns: Array<Object>;
   columns: Array<Object>;
+  selected: Array<Object>;
   page: Object;
   sortParams: Object;
   pageParams: Object;
@@ -22,6 +24,7 @@ export class ResourceIndexComponent implements OnInit {
   constructor(
     private _apiData: ApiDataService) {
     this.columns = [];
+    this.selected = [];
     this.allColumns = this.columns;
     this.page = { 'page': 1, 'per': 10 };
     this.sortParams = { 'sort_column': 'id', 'sort_direction': 'asc' };
@@ -32,6 +35,10 @@ export class ResourceIndexComponent implements OnInit {
   ngOnInit() {
     this.apiResource.allAtributeNames.forEach((column: string) => this.allColumns.push({ 'name': column, 'prop': column, 'sortable': true }));
     this.setPage({ offset: 0 });
+  }
+
+  showNewResource() {
+    this.new.emit();
   }
 
   toggle(col: any) {
@@ -50,6 +57,11 @@ export class ResourceIndexComponent implements OnInit {
     return this.columns.find(c => {
       return c['name'] === col['name'];
     });
+  }
+
+  onSelect(event: any) {
+    this.selected.splice(0, this.selected.length);
+    this.selected.push(...event.selected);
   }
 
   setPage(event: any) {

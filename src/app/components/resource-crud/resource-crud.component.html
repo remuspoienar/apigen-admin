@@ -1,1 +1,2 @@
-<resource-index [apiResource]="apiResource"></resource-index>
+<resource-new *ngIf="isNew" (hide)="hideNew($event)" [apiResource]="apiResource"></resource-new>
+<resource-index *ngIf="!reset" (new)="showNew($event)" [apiResource]="apiResource"></resource-index>

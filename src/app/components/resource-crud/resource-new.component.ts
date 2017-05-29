@@ -13,6 +13,7 @@ import { ApiDataService } from '../../services/api-data.service';
 export class ResourceNewComponent implements OnInit {
 
   @Input() apiResource: ApiResource;
+  @Output() hide: EventEmitter<any> = new EventEmitter();
 
   requestBody: Object = {};
 
@@ -24,7 +25,11 @@ export class ResourceNewComponent implements OnInit {
   }
 
   onFormActionClick() {
-    this._apiData.createResource(this.apiResource.tableName, this.requestBody).subscribe(data => alert(JSON.stringify(data)), error => console.log(error));
+    this._apiData.createResource(this.apiResource.tableName, this.requestBody).subscribe(data => this.hideNew({'callServer': true}), error => console.log(error));
+  }
+
+  hideNew(options: Object = {}) {
+    this.hide.emit(options);
   }
 
 }

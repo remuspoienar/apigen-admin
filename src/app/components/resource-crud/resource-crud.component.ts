@@ -15,6 +15,8 @@ export class ResourceCrudComponent implements OnInit {
   @Input() apiResource: ApiResource;
 
   requestBody: Object = {};
+  isNew: boolean = false;
+  reset: boolean = false;
 
   constructor(
     private _apiData: ApiDataService) { }
@@ -23,8 +25,16 @@ export class ResourceCrudComponent implements OnInit {
     this.requestBody[this.apiResource.formattedName] = {};
   }
 
-  onFormActionClick() {
-    this._apiData.createResource(this.apiResource.tableName, this.requestBody).subscribe(data => alert(JSON.stringify(data)), error => console.log(error));
+  showNew(event: any) {
+    this.isNew = true;
+  }
+
+  hideNew(event: any) {
+    this.isNew = false;
+    if(event['callServer']) {
+      this.reset = true;
+      setTimeout(() => this.reset = false, 0);
+    }
   }
 
 }

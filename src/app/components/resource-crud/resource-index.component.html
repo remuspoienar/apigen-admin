@@ -1,20 +1,40 @@
-this is {{ apiResource.name }} index
+<md-toolbar color="primary">
 
-<br />
+  <button color="warn" md-icon-button [disabled]="selected.length === 0">
+    <md-icon>delete</md-icon>
+  </button>
+
+  <span class="example-fill-remaining-space"></span>
+
+  <button md-icon-button (click)="showNewResource()">
+    <md-icon>add</md-icon>
+  </button>
+
+  <span class="example-fill-remaining-space"></span>
+
+  <span *ngIf="rows">
+    <button md-icon-button [mdMenuTriggerFor]="menu">
+      <md-icon>settings</md-icon>
+    </button>
+
+    <md-menu #menu="mdMenu" class="selected-column">
+      <button md-button disabled="">Toggle columns </button><hr />
+      <span *ngFor="let col of allColumns" md-menu-item (click)="$event.stopPropagation();toggle(col)">
+        <md-checkbox
+          color="primary"
+          align="start"
+          [id]="col.name"
+          (change)='toggle(col)'
+          [checked]='isChecked(col)'>
+        {{ col.name }}
+      </md-checkbox>
+    </span>
+    </md-menu>
+  </span>
+</md-toolbar>
 
 <span *ngIf="rows">
-  there are {{ rows.length }} {{apiResource.tableName }}
-  <div class='selected-column'>
-        <span *ngFor='let col of allColumns'>
-          <input
-            type='checkbox'
-            [id]="col.name"
-            (click)='toggle(col)'
-            [checked]='isChecked(col)'
-          />
-          <label [attr.for]="col.name">{{col.name}}</label>
-        </span>
-  </div>
+  <br />
   <div>
   <ngx-datatable
     class="material"
@@ -35,7 +55,9 @@ this is {{ apiResource.name }} index
     [loadingIndicator]="loading"
     (sort)="onSort($event)"
 
+    [selected]="selected"
     [selectionType]="'multiClick'"
+    (select)='onSelect($event)'
     >
   </ngx-datatable>
 </div>

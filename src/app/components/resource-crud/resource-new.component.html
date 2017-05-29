@@ -10,7 +10,9 @@
     <association-input *ngFor="let association of apiResource.reverseAssociations" [requestBody]="requestBody[apiResource.formattedName]" [reverseAssociation]="association" [apiResource]="apiResource"></association-input>
 
     <br />
+    <button md-raised-button color="warn" (click)="hideNew()">CANCEL</button>
     <button md-raised-button color="primary" [disabled]="!theForm.valid" (click)="onFormActionClick()">CREATE {{apiResource.name | uppercase }}</button>
   </form>
   {{ requestBody | json }}
+  <br />
 </span>
