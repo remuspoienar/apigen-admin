@@ -19,7 +19,7 @@
 
     <md-menu #menu="mdMenu" class="selected-column">
       <button md-button disabled="">Toggle columns </button><hr />
-      <span *ngFor="let col of allColumns" md-menu-item (click)="$event.stopPropagation();toggle(col)">
+      <span *ngFor="let col of allColumns" md-menu-item (click)="$event.stopPropagation(); toggle(col)">
         <md-checkbox
           color="primary"
           align="start"
@@ -37,7 +37,8 @@
   <br />
   <div>
   <ngx-datatable
-    class="material"
+    #theTable
+    class="material expandable"
     [rows]="rows"
     [columnMode]="'force'"
     [columns]="columns"
@@ -57,8 +58,43 @@
 
     [selected]="selected"
     [selectionType]="'multiClick'"
-    (select)='onSelect($event)'
-    >
+    (select)='onSelect($event)'>
+
+    <!-- Row Detail Template -->
+     <ngx-datatable-row-detail [rowHeight]="100" #theDetailRow (toggle)="onDetailToggle($event)">
+       <ng-template let-row="row" ngx-datatable-row-detail-template>
+         <div>
+           <div><strong>Row detail</strong></div>
+           <div>Record #{{ row.id }}</div>
+         </div>
+       </ng-template>
+     </ngx-datatable-row-detail>
+
+     <!-- Column Templates -->
+    <ngx-datatable-column
+      [width]="50"
+      [resizeable]="false"
+      [sortable]="false"
+      [draggable]="false"
+      [canAutoResize]="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span style="cursor: pointer"
+            md-icon-button
+            title="Expand/Collapse Row"
+            (click)="$event.stopPropagation(); toggleExpandRow(row)">
+            <md-icon>
+              {{ row.$$expanded ? 'expand_more' : 'keyboard_arrow_right' }}
+            </md-icon>
+          </span>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column *ngFor="let col of columns" [name]="col.name">
+       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+         {{row[col.name]}}
+       </ng-template>
+     </ngx-datatable-column>
+
   </ngx-datatable>
 </div>
 </span>
