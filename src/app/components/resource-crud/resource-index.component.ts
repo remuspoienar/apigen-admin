@@ -56,7 +56,7 @@ export class ResourceIndexComponent implements OnInit {
   }
 
   onDetailToggle(event: any) {
-    console.log('Detail Toggled', event);
+    // console.log('Detail Toggled', event);
   }
 
   onSort(event: any) {
@@ -66,11 +66,12 @@ export class ResourceIndexComponent implements OnInit {
   }
 
   toggleExpandRow(row: any) {
-    console.log('Toggled Expand Row!', row);
+    // console.log('Toggled Expand Row!', row);
     this.table.rowDetail.toggleExpandRow(row);
   }
 
   toggle(col: any) {
+    if (col['name'] === 'id') return;
     const isChecked = this.isChecked(col);
 
     if (isChecked) {
@@ -113,6 +114,17 @@ export class ResourceIndexComponent implements OnInit {
       this.rows = data['rows'];
       this.loading = false;
     }, error => console.log(error));
+  }
+
+  resetTable(event: any) {
+    if(event['callServer']) {
+      this.fetchRows();
+    }
+  }
+
+  bulkDelete() {
+    let ids = this.selected.map(row => row['id']);
+    return this._apiData.bulkDeleteResources(this.apiResource.tableName, ids).subscribe(response => {this.fetchRows(); this.selected = []});
   }
 
   get queryParams() {

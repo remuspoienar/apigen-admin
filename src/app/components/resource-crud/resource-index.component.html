@@ -1,6 +1,6 @@
 <md-toolbar color="primary">
 
-  <button color="warn" md-icon-button [disabled]="selected.length === 0">
+  <button color="warn" md-icon-button (click)="bulkDelete()" [disabled]="selected.length === 0">
     <md-icon>delete</md-icon>
   </button>
 
@@ -18,12 +18,13 @@
     </button>
 
     <md-menu #menu="mdMenu" class="selected-column">
-      <button md-button disabled="">Toggle columns </button><hr />
+      <button md-button disabled>Toggle columns </button><hr />
       <span *ngFor="let col of allColumns" md-menu-item (click)="$event.stopPropagation(); toggle(col)">
         <md-checkbox
           color="primary"
           align="start"
           [id]="col.name"
+          [disabled]="col.name === 'id'"
           (change)='toggle(col)'
           [checked]='isChecked(col)'>
         {{ col.name }}
@@ -61,11 +62,10 @@
     (select)='onSelect($event)'>
 
     <!-- Row Detail Template -->
-     <ngx-datatable-row-detail [rowHeight]="100" #theDetailRow (toggle)="onDetailToggle($event)">
+     <ngx-datatable-row-detail [rowHeight]="'auto'" #theDetailRow (toggle)="onDetailToggle($event)">
        <ng-template let-row="row" ngx-datatable-row-detail-template>
          <div>
-           <div><strong>Row detail</strong></div>
-           <div>Record #{{ row.id }}</div>
+           <resource-show (hide)="resetTable($event);toggleExpandRow(row)" [apiResource]="apiResource" [data]="row"></resource-show>
          </div>
        </ng-template>
      </ngx-datatable-row-detail>

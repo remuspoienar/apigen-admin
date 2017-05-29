@@ -1,9 +1,11 @@
 <span *ngIf="apiResource">
   <form #theForm="ngForm" class="center one-half">
-    <br />
-    New {{ apiResource.name }} attributes
-    <hr />
-    <br />
+    <span *ngIf="action === 'create'">
+      <br />
+      New {{ apiResource.name }} attributes
+      <hr />
+      <br />
+    </span>
 
     <attribute-input *ngFor="let attribute of apiResource.apiAttributes" [requestBody]="requestBody[apiResource.formattedName]" [apiAttribute]="attribute" [apiResource]="apiResource"></attribute-input>
 
@@ -11,8 +13,7 @@
 
     <br />
     <button md-raised-button color="warn" (click)="hideNew()">CANCEL</button>
-    <button md-raised-button color="primary" [disabled]="!theForm.valid" (click)="onFormActionClick()">CREATE {{apiResource.name | uppercase }}</button>
+    <button md-raised-button color="primary" [disabled]="!theForm.valid" (click)="onFormActionClick()">{{action | uppercase }} {{apiResource.name | uppercase }}</button>
   </form>
-  {{ requestBody | json }}
   <br />
 </span>

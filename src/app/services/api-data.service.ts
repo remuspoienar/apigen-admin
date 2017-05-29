@@ -102,6 +102,24 @@ export class ApiDataService {
         .catch(this.handleError);
     }
 
+    updateResource(pluralizedResource: string, body: Object) {
+      let host = ApiProject.current.apiHost;
+      let id = body['id'];
+      delete body['id'];
+      return this._http.put(`${host}/${pluralizedResource}/${id}`, body, this.optionsWithAuthHeader())
+        .map(this.handleData)
+        .catch(this.handleError);
+    }
+
+    bulkDeleteResources(pluralizedResource: string, ids: Array<string>) {
+      let host = ApiProject.current.apiHost;
+      let queryString = '?'.concat(ids.map(id => `ids[]=${id}`).join('&'));
+
+      return this._http.delete(`${host}/${pluralizedResource}/bulk_delete${queryString}`, this.optionsWithAuthHeader())
+        .map(this.handleData)
+        .catch(this.handleError);
+    }
+
     private optionsWithAuthHeader() {
         let authToken = localStorage.getItem('authToken');
         let options = this.DEFAULT_OPTIONS;

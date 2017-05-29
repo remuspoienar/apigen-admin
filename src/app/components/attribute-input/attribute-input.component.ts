@@ -15,7 +15,7 @@ export class AttributeInputComponent implements OnInit {
     @Input() requestBody: Object;
 
     ngOnInit() {
-      this.requestBody[this.apiAttribute.formattedName] = '';
+      if (!this.requestBody[this.apiAttribute.formattedName]) this.requestBody[this.apiAttribute.formattedName] = '';
     }
 
 

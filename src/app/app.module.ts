@@ -30,6 +30,7 @@ import { AssociationInputComponent } from './components/association-input/associ
 import { ResourceCrudComponent } from './components/resource-crud/resource-crud.component';
 import { ResourceIndexComponent } from './components/resource-crud/resource-index.component';
 import { ResourceNewComponent } from './components/resource-crud/resource-new.component';
+import { ResourceShowComponent } from './components/resource-crud/resource-show.component';
 
 // services
 import { ApiDataService } from './services/api-data.service';
@@ -96,6 +97,7 @@ const routes: Routes = [
     ResourceCrudComponent,
     ResourceIndexComponent,
     ResourceNewComponent,
+    ResourceShowComponent,
     CapitalizePipe
   ],
   providers: [AuthenticationService, ApiDataService],
