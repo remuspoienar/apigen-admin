@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule } from '@angular/material';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import 'hammerjs';
 
 // components
@@ -27,6 +28,7 @@ import { ApiAssociationComponent } from './components/api-association/api-associ
 import { AttributeInputComponent } from './components/attribute-input/attribute-input.component';
 import { AssociationInputComponent } from './components/association-input/association-input.component';
 import { ResourceCrudComponent } from './components/resource-crud/resource-crud.component';
+import { ResourceIndexComponent } from './components/resource-crud/resource-index.component';
 import { ResourceNewComponent } from './components/resource-crud/resource-new.component';
 
 // services
@@ -75,7 +77,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [BrowserModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HttpModule],
+  imports: [BrowserModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HttpModule, NgxDatatableModule],
   declarations: [
     AppComponent,
     SigninComponent,
@@ -92,6 +94,7 @@ const routes: Routes = [
     AttributeInputComponent,
     AssociationInputComponent,
     ResourceCrudComponent,
+    ResourceIndexComponent,
     ResourceNewComponent,
     CapitalizePipe
   ],

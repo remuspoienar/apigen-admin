@@ -1,0 +1,42 @@
+this is {{ apiResource.name }} index
+
+<br />
+
+<span *ngIf="rows">
+  there are {{ rows.length }} {{apiResource.tableName }}
+  <div class='selected-column'>
+        <span *ngFor='let col of allColumns'>
+          <input
+            type='checkbox'
+            [id]="col.name"
+            (click)='toggle(col)'
+            [checked]='isChecked(col)'
+          />
+          <label [attr.for]="col.name">{{col.name}}</label>
+        </span>
+  </div>
+  <div>
+  <ngx-datatable
+    class="material"
+    [rows]="rows"
+    [columnMode]="'force'"
+    [columns]="columns"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+
+    [externalPaging]="true"
+    [count]="page.count"
+    [offset]="page.page - 1"
+    [limit]="page.per"
+    (page)='setPage($event)'
+
+    [externalSorting]="true"
+    [loadingIndicator]="loading"
+    (sort)="onSort($event)"
+
+    [selectionType]="'multiClick'"
+    >
+  </ngx-datatable>
+</div>
+</span>

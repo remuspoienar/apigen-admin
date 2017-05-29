@@ -96,4 +96,10 @@ export class ApiResource {
     static set current(apiResource: ApiResource) {
         this._current = apiResource;
     }
+
+    get allAtributeNames() {
+      let result = ['id'].concat(this.apiAttributes.map(attr => attr.formattedName));
+      result.push(...this.reverseAssociations.map(assoc => assoc['label'] + '_id'));
+      return result;
+    }
 }

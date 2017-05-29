@@ -9,14 +9,17 @@
     <md-card-content>
       <a md-raised-button color="primary" *ngIf="!apiProject.launched" (click)="launchApiProject()"><md-icon>launch</md-icon>LAUNCH</a>
       <a md-raised-button color="warn" *ngIf="apiProject.launched" (click)="shutdownApiProject()"><md-icon>exit_to_app</md-icon>SHUTDOWN</a>
-      <md-tab-group [selectedIndex]="0" (selectChange)="onTabSelectChange($event)" *ngIf="apiProject.launched && apiProject.apiResources.length > 0">
-        <md-tab *ngFor="let resource of apiProject.apiResources" [label]="resource.name"></md-tab>
-      </md-tab-group>
 
-      <br />
+      <span *ngIf="apiProject.launched && apiProject.apiResources.length > 0">
+        <md-tab-group [selectedIndex]="0" (selectChange)="onTabSelectChange($event)">
+          <md-tab *ngFor="let resource of apiProject.apiResources" [label]="resource.name"></md-tab>
+        </md-tab-group>
 
-      <span *ngIf="apiResource">
-        <resource-crud [apiResource]="apiResource"></resource-crud>
+        <br />
+
+        <span *ngIf="apiResource">
+          <resource-crud [apiResource]="apiResource"></resource-crud>
+        </span>
       </span>
     </md-card-content>
   </md-card>

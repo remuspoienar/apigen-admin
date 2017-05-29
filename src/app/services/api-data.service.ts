@@ -79,9 +79,18 @@ export class ApiDataService {
           .catch(this.handleError);
     }
 
-    getResourceRecords(pluralizedResource: string) {
+    getResourceRecords(pluralizedResource: string, page: Object) {
       let host = ApiProject.current.apiHost;
-      return this._http.get(`${host}/${pluralizedResource}`, this.optionsWithAuthHeader())
+      let queryParams = [];
+      if (Object.keys(page).length > 0 ) {
+        for(let param in page) {
+          queryParams.push(`${param}=${encodeURI(page[param])}`);
+        }
+      }
+
+      let queryString = queryParams.length === 0 ? '' : `?${queryParams.join('&')}`;
+
+      return this._http.get(`${host}/${pluralizedResource}${queryString}`, this.DEFAULT_OPTIONS)
           .map(this.handleData)
           .catch(this.handleError);
     }
