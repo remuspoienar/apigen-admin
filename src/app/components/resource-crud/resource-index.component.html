@@ -6,6 +6,12 @@
 
   <span class="example-fill-remaining-space"></span>
 
+  <button md-icon-button (click)="toggleSearch()" [disabled]="(rows && rows.length === 0)">
+    <md-icon>search</md-icon>
+  </button>
+
+  <span class="example-fill-remaining-space"></span>
+
   <button md-icon-button (click)="showNewResource()">
     <md-icon>add</md-icon>
   </button>
@@ -33,6 +39,18 @@
     </md-menu>
   </span>
 </md-toolbar>
+
+<md-card *ngIf="showSearch">
+  <md-card-content>
+    <md-input-container class="width-30-percent" style="margin-right: 15px" *ngFor="let col of allColumns">
+      <input [name]="'q' + col.name" mdInput [(ngModel)]="query[col.name]" [placeholder]="col.name">
+    </md-input-container>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button color="warn" (click)="resetQuery()"><md-icon>clear_all</md-icon>RESET</button>
+    <button md-button color="primary" (click)="onSearch($event)"><md-icon>search</md-icon>SEARCH</button>
+  </md-card-actions>
+</md-card>
 
 <span *ngIf="rows">
   <br />

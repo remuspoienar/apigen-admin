@@ -79,13 +79,30 @@ export class ApiDataService {
           .catch(this.handleError);
     }
 
-    getResourceRecords(pluralizedResource: string, page: Object) {
+    getResourceRecords(pluralizedResource: string, params: Object) {
       let host = ApiProject.current.apiHost;
       let queryParams = [];
-      if (Object.keys(page).length > 0 ) {
-        for(let param in page) {
-          queryParams.push(`${param}=${encodeURI(page[param])}`);
+      let qString = '';
+
+      if (Object.keys(params).length > 0 ) {
+        if(params['q']) {
+          let qS = [];
+          for (let key in params['q']) {
+            qS.push(`q[${key}]=${params['q'][key]}`);
+          }
+          qString = encodeURI(qS.join('&'));
         }
+
+        if(params['includes']) {
+          if (qString !== '') qString += '&';
+          qString += encodeURI(params['includes'].map(column => `includes[]=${column}`).join('&'));
+        }
+
+        for(let param in params) {
+          if(param === 'q' || param === 'includes') continue;
+          queryParams.push(`${param}=${encodeURI(params[param])}`);
+        }
+        queryParams.push(qString);
       }
 
       let queryString = queryParams.length === 0 ? '' : `?${queryParams.join('&')}`;
@@ -115,7 +132,7 @@ export class ApiDataService {
       let host = ApiProject.current.apiHost;
       let queryString = '?'.concat(ids.map(id => `ids[]=${id}`).join('&'));
 
-      return this._http.delete(`${host}/${pluralizedResource}/bulk_delete${queryString}`, this.optionsWithAuthHeader())
+      return this._http.delete(`${host}/${pluralizedResource}/${queryString}`, this.optionsWithAuthHeader())
         .map(this.handleData)
         .catch(this.handleError);
     }

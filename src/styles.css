@@ -72,6 +72,10 @@ md-input-container.projectName {
     width: 30%;
 }
 
+md-input-container.width-30-percent {
+  width: 30%;
+}
+
 md-input-container.width-60-percent {
   width: 60%;
 }

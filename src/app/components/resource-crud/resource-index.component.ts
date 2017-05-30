@@ -23,6 +23,9 @@ export class ResourceIndexComponent implements OnInit {
   sortParams: Object;
   pageParams: Object;
   loading: boolean;
+  showSearch: boolean;
+  query: Object;
+  formattedQuery: Object;
 
   constructor(
     private _apiData: ApiDataService) {
@@ -34,10 +37,16 @@ export class ResourceIndexComponent implements OnInit {
     this.sortParams = { 'sort_column': 'id', 'sort_direction': 'asc' };
     this.pageParams = this.page;
     this.loading = false;
+    this.showSearch = false;
+    this.query = {};
+    this.formattedQuery = {};
   }
 
   ngOnInit() {
-    this.apiResource.allAtributeNames.forEach((column: string) => this.allColumns.push({ 'name': column, 'prop': column, 'sortable': true }));
+    this.apiResource.allAtributeNames.forEach((column: string) => {
+      this.allColumns.push({ 'name': column, 'prop': column, 'sortable': true });
+      this.query[column] = '';
+    });
     this.setPage({ offset: 0 });
   }
 
@@ -59,10 +68,19 @@ export class ResourceIndexComponent implements OnInit {
     // console.log('Detail Toggled', event);
   }
 
+  onSearch(event: any) {
+    this.formatQuery();
+    this.fetchRows();
+  }
+
   onSort(event: any) {
     this.setSortParams(event);
     this.resetPageParams();
     this.fetchRows();
+  }
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
   }
 
   toggleExpandRow(row: any) {
@@ -107,6 +125,22 @@ export class ResourceIndexComponent implements OnInit {
     this.pageParams['page'] = 1;
   }
 
+  resetQuery() {
+    for (let key in this.query) {
+      this.query[key] = ''
+    }
+  }
+
+  formatQuery() {
+    let formattedQuery = {};
+    for (let key in this.query) {
+      let value = this.query[key];
+      if (value === '') continue;
+      formattedQuery[`${key}_${ isNaN(Number(value)) ? 'cont' : 'eq'}`] = value;
+    }
+    this.formattedQuery = {'q': formattedQuery};
+  }
+
   fetchRows() {
     this.loading = true;
     return this._apiData.getResourceRecords(this.apiResource.tableName, this.queryParams).subscribe(data => {
@@ -128,7 +162,7 @@ export class ResourceIndexComponent implements OnInit {
   }
 
   get queryParams() {
-    return Object.assign({}, this.pageParams, this.sortParams);
+    return Object.assign({}, this.pageParams, this.sortParams, this.formattedQuery);
   }
 
 }
