@@ -11,7 +11,7 @@
 
             <p>
                 <span *ngIf="apiResource.apiAttributes.length === 0">
-                NO 
+                NO
                 </span> Attributes for {{ apiResource.name }}
                 <button md-button color="primary" (click)="addNewAttribute()"><md-icon>add</md-icon>NEW</button>
             </p>
@@ -24,7 +24,7 @@
 
             <p>
                 <span *ngIf="apiResource.apiAssociations.length === 0">
-                    NO 
+                    NO
                 </span> Associations for {{ apiResource.name }}
                 <button md-button color="primary" (click)="addNewAssociation()"><md-icon>add</md-icon>NEW</button>
             </p>
@@ -33,6 +33,20 @@
             <api-association *ngFor="let association of apiResource.apiAssociations" (delete)="deleteAssociation(apiResource.apiAssociations.indexOf(association))"
                 [apiAssociation]="association" [apiResource]="apiResource"></api-association>
 
+            <br />
+
+            <span *ngIf="permissionsVisible">
+              <p>
+                <span *ngIf="apiResource.permissions.length === 0">
+                  NO
+                </span> Permissions for {{ apiResource.name }}
+                <button md-button color="primary" (click)="addNewPermission()"><md-icon>add</md-icon>NEW</button>
+              </p>
+
+              <user-permission *ngFor="let permission of apiResource.permissions" (delete)="deletePermission(apiResource.permissions.indexOf(permission))"
+                  [permission]="permission"></user-permission>
+              <br />
+            </span>
         </md-card-content>
     </md-card>
     <br>

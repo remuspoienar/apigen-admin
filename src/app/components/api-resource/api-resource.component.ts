@@ -3,6 +3,7 @@ import { ApiUser } from '../../models/api-user.model';
 import { ApiResource } from '../../models/api-resource.model';
 import { ApiAssociation } from '../../models/api-association.model';
 import { ApiAttribute } from '../../models/api-attribute.model';
+import { Permission } from '../../models/permission.model';
 
 @Component({
     selector: 'api-resource',
@@ -11,10 +12,24 @@ import { ApiAttribute } from '../../models/api-attribute.model';
 export class ApiResourceComponent {
 
     @Input() apiResource: ApiResource;
+    @Input() permissionsVisible: boolean;
     @Output() delete: EventEmitter<null> = new EventEmitter();
 
     emitDelete() {
         this.delete.emit();
+    }
+
+    addNewPermission() {
+      this.apiResource.permissions.unshift(new Permission({}));
+    }
+
+    deletePermission(index: number) {
+      let permission = this.apiResource.permissions[index];
+      if (permission.id) {
+          permission.markAsRemoved();
+      } else {
+          this.apiResource.permissions.splice(index, 1);
+      }
     }
 
     addNewAssociation() {
@@ -32,7 +47,6 @@ export class ApiResourceComponent {
 
     addNewAttribute() {
         this.apiResource.apiAttributes.unshift(new ApiAttribute({}));
-
     }
 
     deleteAttribute(index: number) {
@@ -46,4 +60,3 @@ export class ApiResourceComponent {
     }
 
 }
-

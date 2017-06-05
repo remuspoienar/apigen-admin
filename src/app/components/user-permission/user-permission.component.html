@@ -1,0 +1,25 @@
+<span *ngIf="permission">
+  <br />
+  <md-card class="center text-center">
+    <md-card-content>
+      <button class="pull-right" md-icon-button color="warn" (click)="emitDelete()"><md-icon>delete</md-icon></button>
+
+      <md-input-container class="width-30-percent">
+        <input required mdInput placeholder="User" [(ngModel)]="permission.apiUserId" [mdAutocomplete]="auto" [formControl]="userCtrl">
+      </md-input-container>
+
+      <md-autocomplete #auto="mdAutocomplete">
+        <md-option *ngFor="let user of filteredUsers | async" [value]="user.id">
+          {{ user.name }}
+        </md-option>
+      </md-autocomplete>
+
+      <md-select class="width-60-percent" required multiple placeholder="Allowed actions on resource" [(ngModel)]="permission.actions">
+          <md-option *ngFor="let option of allActions" [value]="option">
+              {{ option | uppercase }}
+          </md-option>
+      </md-select>
+
+    </md-card-content>
+  </md-card>
+</span>

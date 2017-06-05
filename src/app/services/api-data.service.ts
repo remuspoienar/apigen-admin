@@ -15,6 +15,16 @@ export class ApiDataService {
     constructor(
         private _http: Http) { }
 
+    getApiUsers(): Observable<any> {
+      let authToken = localStorage.getItem('authToken');
+      let options = this.DEFAULT_OPTIONS;
+      if (!options.headers.get('Authorization')) options.headers.append('Authorization', authToken);
+      return this._http.get('http://localhost:3003/api_users', options)
+          .map(this.handleData)
+          .catch(this.handleError);
+    }
+
+
     fetchApiProjects() {
         let authToken = localStorage.getItem('authToken');
         let options = this.DEFAULT_OPTIONS;
@@ -95,7 +105,7 @@ export class ApiDataService {
 
         if(params['includes']) {
           if (qString !== '') qString += '&';
-          qString += encodeURI(params['includes'].map(column => `includes[]=${column}`).join('&'));
+          qString += encodeURI(params['includes'].map((column: any) => `includes[]=${column}`).join('&'));
         }
 
         for(let param in params) {

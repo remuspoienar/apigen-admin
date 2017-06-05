@@ -1,6 +1,7 @@
 import { ApiProject } from './api-project.model';
 import { ApiAttribute } from './api-attribute.model';
 import { ApiAssociation } from './api-association.model';
+import { Permission } from './permission.model';
 
 let _ = require('lodash');
 let inflector = require('lodash-inflection');
@@ -15,6 +16,7 @@ export class ApiResource {
     apiAttributes: Array<ApiAttribute> = [];
     apiAssociations: Array<ApiAssociation> = [];
     reverseAssociations: Array<Object> = [];
+    permissions: Array<Permission> = [];
 
     private _delete: boolean = null;
     private static _current: ApiResource;
@@ -36,7 +38,11 @@ export class ApiResource {
         }
 
         if (attributes.hasOwnProperty('reverse_associations')) {
-          this.reverseAssociations = attributes['reverse_associations']
+          this.reverseAssociations = attributes['reverse_associations'];
+        }
+
+        if (attributes.hasOwnProperty('permissions')) {
+          this.createPermissions(attributes['permissions']);
         }
     }
 
@@ -58,6 +64,15 @@ export class ApiResource {
         });
     }
 
+    createPermissions(data: Array<Object>) {
+      let permission;
+      data.forEach((permissionAttributes: Object) => {
+        permission = new Permission(permissionAttributes);
+        if (permission.apiUserId === ApiProject.current.createdById) return;
+        this.permissions.push(permission);
+      });
+    }
+
     asApiRequestFormat() {
         let result = {};
         if (this.id) result['id'] = this.id;
@@ -67,6 +82,9 @@ export class ApiResource {
         }
         if (this.apiAttributes.length > 0) {
             result['api_attributes_attributes'] = this.apiAttributes.map(attribute => attribute.asApiRequestFormat())
+        }
+        if (this.permissions.length > 0) {
+          result['permissions_attributes'] = this.permissions.map(permission => permission.asApiRequestFormat());
         }
         if (this._delete) result['_destroy'] = true;
         return result;

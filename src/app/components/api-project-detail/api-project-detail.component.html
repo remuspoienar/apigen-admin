@@ -1,43 +1,39 @@
-<br>
-<md-card *ngIf="apiProject" class="center one-half">
-    <md-card-header class="center-card-header text-center">
-        <md-card-title>{{ apiProject.name ? apiProject.name : (formAction === "create") ? "(NEW PROJECT)" : "" }}</md-card-title>
-        <md-card-subtitle>created by {{ currentUser.name }}</md-card-subtitle>
-        <md-card-subtitle *ngIf="apiProject.createdAt">{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
-    </md-card-header>
-    <div class="center text-center">
-        <button *ngIf="formAction === 'update'" md-raised-button color="warn" (click)="deleteProject()"><md-icon>delete</md-icon>DELETE</button>
-        <button md-raised-button color="primary" (click)="goBackToProjects()">ALL PROJECTS</button>
-    </div>
-    <md-card-content>
-        <br>
-        <form #theForm="ngForm">
-            <md-input-container class="projectName">
-                <input name="projectName" mdInput [(ngModel)]="apiProject.name" placeholder="Project name" required #pName="ngModel">
-            </md-input-container>
-            <br>
-            <!--<md-card>
-                <md-card-header>
-                    <md-card-title>Resources</md-card-title>
-                    <md-card-subtitle>What resources should this API manage?</md-card-subtitle>
-                </md-card-header>-->
-            <!--<md-card-content>-->
-            <p>Resources</p>
-            <p>
-                What resources should this API manage?
-                <button md-button color="primary" (click)="addNewResource()"><md-icon>add</md-icon>NEW</button>
-            </p>
-            <br>
-            <api-resource *ngFor="let resource of apiProject.apiResources" (delete)="deleteResource(apiProject.apiResources.indexOf(resource))"
-                [apiResource]="resource"></api-resource>
-            <!--</md-card-content>-->
-            <!--</md-card>-->
-            <md-card-actions>
-                <button md-raised-button color="primary" [disabled]="!theForm.valid" (click)="onFormActionClick()">{{ formAction | uppercase }}</button>
-            </md-card-actions>
-        </form>
+<span *ngIf="apiProject">
+  <br>
+  <md-card class="center one-half">
+      <md-card-header class="center-card-header text-center">
+          <md-card-title>{{ apiProject.name ? apiProject.name : (formAction === "create") ? "(NEW PROJECT)" : "" }}</md-card-title>
+          <md-card-subtitle>created by {{ apiProject.admin ? apiProject.admin.name : currentUser.name }}</md-card-subtitle>
+          <md-card-subtitle *ngIf="apiProject.createdAt">{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
+      </md-card-header>
+      <div class="center text-center">
+          <button *ngIf="formAction === 'update' && showAdminActions" md-raised-button color="warn" (click)="deleteProject()"><md-icon>delete</md-icon>DELETE</button>
+          <button md-raised-button color="primary" (click)="goBackToProjects()">ALL PROJECTS</button>
+          <button *ngIf="showAdminActions" md-raised-button color="accent" (click)="togglePermissions()">USER PERMISSIONS</button>
+      </div>
+      <md-card-content>
+          <br />
+          <form #theForm="ngForm">
+              <md-input-container class="projectName">
+                  <input name="projectName" mdInput [(ngModel)]="apiProject.name" placeholder="Project name" required #pName="ngModel">
+              </md-input-container>
+              <br>
+              <p>Resources</p>
+              <p>
+                  What resources should this API manage?
+                  <button md-button color="primary" (click)="addNewResource()"><md-icon>add</md-icon>NEW</button>
+              </p>
+              <br>
+              <api-resource *ngFor="let resource of apiProject.apiResources" (delete)="deleteResource(apiProject.apiResources.indexOf(resource))"
+                  [apiResource]="resource" [permissionsVisible]="permissionsVisible">
+              </api-resource>
+              <md-card-actions>
+                  <button *ngIf="(formAction === 'update' && showAdminActions) || formAction === 'create'" md-raised-button color="primary" [disabled]="!theForm.valid" (click)="onFormActionClick()">{{ formAction | uppercase }}</button>
+              </md-card-actions>
+          </form>
 
-    </md-card-content>
-</md-card>
+      </md-card-content>
+  </md-card>
 
-<p *ngIf="apiProject">{{ apiProject.asApiRequestFormat() | json }}</p>
+  <p *ngIf="apiProject">{{ apiProject.asApiRequestFormat() | json }}</p>
+</span>

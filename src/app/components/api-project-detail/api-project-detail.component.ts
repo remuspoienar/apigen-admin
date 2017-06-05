@@ -19,6 +19,11 @@ export class ApiProjectDetailComponent implements OnInit {
 
     apiProject: ApiProject = null;
     formAction: string = 'update';
+    permissionsVisible: boolean = false;
+
+    get showAdminActions(): boolean {
+      return (this.apiProject.createdById === this.currentUser.id);
+    }
 
     get currentUser(): ApiUser {
         return ApiUser.current;
@@ -50,6 +55,10 @@ export class ApiProjectDetailComponent implements OnInit {
 
     }
 
+    togglePermissions() {
+      this.permissionsVisible = !this.permissionsVisible;
+    }
+
     goBackToProjects() {
         // window.history.back();
         this._router.navigate(['/dashboard']);
@@ -63,4 +72,3 @@ export class ApiProjectDetailComponent implements OnInit {
         localStorage.setItem(key, data);
     }
 }
-

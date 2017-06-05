@@ -31,6 +31,7 @@ import { ResourceCrudComponent } from './components/resource-crud/resource-crud.
 import { ResourceIndexComponent } from './components/resource-crud/resource-index.component';
 import { ResourceNewComponent } from './components/resource-crud/resource-new.component';
 import { ResourceShowComponent } from './components/resource-crud/resource-show.component';
+import { UserPermissionComponent } from './components/user-permission/user-permission.component';
 
 // services
 import { ApiDataService } from './services/api-data.service';
@@ -80,6 +81,7 @@ const routes: Routes = [
 @NgModule({
   imports: [BrowserModule, MaterialModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HttpModule, NgxDatatableModule],
   declarations: [
+    // components
     AppComponent,
     SigninComponent,
     SignupComponent,
@@ -98,6 +100,9 @@ const routes: Routes = [
     ResourceIndexComponent,
     ResourceNewComponent,
     ResourceShowComponent,
+    UserPermissionComponent,
+
+    //pipes
     CapitalizePipe
   ],
   providers: [AuthenticationService, ApiDataService],

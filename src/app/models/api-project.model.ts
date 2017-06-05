@@ -8,6 +8,7 @@ export class ApiProject {
     name: string;
     createdById: number;
     createdAt: string;
+    admin: ApiUser;
     launched: boolean;
     apiHost: string;
 
@@ -22,8 +23,11 @@ export class ApiProject {
         this.launched = attributes['launched'];
         this.apiHost = attributes['api_host'];
 
+        ApiProject.current = this;
+
         if (attributes.hasOwnProperty('created_by')) {
             this.createdById = attributes['created_by']['id'];
+            this.admin = new ApiUser(attributes['created_by']);
         }
 
         if (attributes.hasOwnProperty('api_resources')) {

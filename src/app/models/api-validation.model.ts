@@ -13,7 +13,7 @@ export class ApiValidation {
     constructor(attributes: Object) {
         this.id = attributes['id'];
         this.trait = attributes['trait'];
-        this.advancedOptions = JSON.parse(attributes['advanced_options'] || '{}');
+        this.advancedOptions = attributes['advanced_options'] || {};
 
         if (attributes.hasOwnProperty('api_attribute')) {
             this.apiAttributeId = attributes['api_attribute']['id'];
@@ -25,7 +25,7 @@ export class ApiValidation {
         let result = {};
         if (this.id) result['id'] = this.id;
         if (this.trait) result['trait'] = this.trait;
-        if (this.advancedOptions) result['advanced_options'] = JSON.stringify(this.advancedOptions);
+        result['advanced_options'] = this.advancedOptions;
         if (this._delete) result['_destroy'] = true;
         return result;
     }
