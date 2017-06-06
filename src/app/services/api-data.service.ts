@@ -117,7 +117,7 @@ export class ApiDataService {
 
       let queryString = queryParams.length === 0 ? '' : `?${queryParams.join('&')}`;
 
-      return this._http.get(`${host}/${pluralizedResource}${queryString}`, this.DEFAULT_OPTIONS)
+      return this._http.get(`${host}/${pluralizedResource}${queryString}`, this.optionsWithAuthHeader())
           .map(this.handleData)
           .catch(this.handleError);
     }
