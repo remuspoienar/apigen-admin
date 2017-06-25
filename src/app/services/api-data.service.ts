@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response, ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -86,6 +86,12 @@ export class ApiDataService {
     shutDownApiProject(id: number) {
       return this._http.get(`http://localhost:3003/api/v1/api_projects/${id}/shutdown`, this.optionsWithAuthHeader())
           .map(this.handleData)
+          .catch(this.handleError);
+    }
+
+    downloadProject(id: number) {
+      return this._http.get(`http://localhost:3003/api/v1/api_projects/${id}/download`, this.optionsWithAuthHeader().merge({responseType: ResponseContentType.ArrayBuffer}))
+          .map((res: Response) => res['_body'])
           .catch(this.handleError);
     }
 

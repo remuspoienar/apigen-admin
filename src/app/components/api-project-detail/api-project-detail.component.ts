@@ -41,6 +41,10 @@ export class ApiProjectDetailComponent implements OnInit {
         this._apiData.deleteProject(this.apiProject.id).subscribe(data => this.goBackToProjects(), error => console.log(error));
     }
 
+    downloadProject() {
+      this._apiData.downloadProject(this.apiProject.id).subscribe(data => window.open(window.URL.createObjectURL(new Blob([data], {type: 'application/zip'}))), error => console.log(error));
+    }
+
     addNewResource() {
         this.apiProject.apiResources.unshift(new ApiResource({}));
     }

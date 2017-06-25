@@ -7,10 +7,13 @@
           <md-card-subtitle *ngIf="apiProject.createdAt">{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
       </md-card-header>
       <div class="center text-center">
-          <button *ngIf="formAction === 'update' && showAdminActions" md-raised-button color="warn" (click)="deleteProject()"><md-icon>delete</md-icon>DELETE</button>
-          <button md-raised-button color="primary" (click)="goBackToProjects()">ALL PROJECTS</button>
-          <button *ngIf="showAdminActions" md-raised-button color="accent" (click)="togglePermissions()">USER PERMISSIONS</button>
+        <button md-raised-button color="primary" (click)="goBackToProjects()"><md-icon>arrow_back</md-icon>ALL PROJECTS</button>
+        <button *ngIf="formAction === 'update' && showAdminActions" md-raised-button color="warn" (click)="deleteProject()"><md-icon>delete</md-icon>DELETE</button>
+        <button *ngIf="formAction === 'update' && showAdminActions" md-raised-button color="primary" (click)="downloadProject()"><md-icon>file_download</md-icon>DOWNLOAD CODE</button>
+
+        <button *ngIf="showAdminActions" md-raised-button color="none" (click)="togglePermissions()">USER PERMISSIONS</button>
       </div>
+      <br />
       <md-card-content>
           <br />
           <form #theForm="ngForm">
