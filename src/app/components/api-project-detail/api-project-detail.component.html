@@ -5,6 +5,7 @@
           <md-card-title>{{ apiProject.name ? apiProject.name : (formAction === "create") ? "(NEW PROJECT)" : "" }}</md-card-title>
           <md-card-subtitle>created by {{ apiProject.admin ? apiProject.admin.name : currentUser.name }}</md-card-subtitle>
           <md-card-subtitle *ngIf="apiProject.createdAt">{{ apiProject.createdAt | date: 'yMMMdjms' }}</md-card-subtitle>
+          <md-card-subtitle *ngIf="apiProject.apiHost">URL: {{ apiProject.apiHost }}</md-card-subtitle>
       </md-card-header>
       <div class="center text-center">
         <button md-raised-button color="primary" (click)="goBackToProjects()"><md-icon>arrow_back</md-icon>ALL PROJECTS</button>

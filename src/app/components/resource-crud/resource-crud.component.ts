@@ -18,6 +18,8 @@ export class ResourceCrudComponent implements OnInit {
   isNew: boolean = false;
   reset: boolean = false;
 
+  error: any = null;
+
   constructor(
     private _apiData: ApiDataService) { }
 
@@ -35,6 +37,10 @@ export class ResourceCrudComponent implements OnInit {
       this.reset = true;
       setTimeout(() => this.reset = false, 0);
     }
+  }
+
+  handleError(event: any) {
+    this.error = event;
   }
 
 }

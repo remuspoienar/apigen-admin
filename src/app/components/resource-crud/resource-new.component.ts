@@ -14,6 +14,7 @@ export class ResourceNewComponent implements OnInit {
 
   @Input() apiResource: ApiResource;
   @Output() hide: EventEmitter<any> = new EventEmitter();
+  @Output() error: EventEmitter<any> = new EventEmitter();
 
   requestBody: Object = {};
   action: string = "create";
@@ -26,7 +27,7 @@ export class ResourceNewComponent implements OnInit {
   }
 
   onFormActionClick() {
-    this._apiData.createResource(this.apiResource.tableName, this.requestBody).subscribe(data => this.hideNew({'callServer': true}), error => console.log(error));
+    this._apiData.createResource(this.apiResource.tableName, this.requestBody).subscribe(data => this.hideNew({'callServer': true}), error =>this.error.emit(JSON.parse(error)));
   }
 
   hideNew(options: Object = {}) {

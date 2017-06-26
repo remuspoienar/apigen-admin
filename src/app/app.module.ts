@@ -28,6 +28,7 @@ import { ApiAssociationComponent } from './components/api-association/api-associ
 import { AttributeInputComponent } from './components/attribute-input/attribute-input.component';
 import { AssociationInputComponent } from './components/association-input/association-input.component';
 import { ResourceCrudComponent } from './components/resource-crud/resource-crud.component';
+import { ResourceErrorComponent } from './components/resource-crud/resource-error.component';
 import { ResourceIndexComponent } from './components/resource-crud/resource-index.component';
 import { ResourceNewComponent } from './components/resource-crud/resource-new.component';
 import { ResourceShowComponent } from './components/resource-crud/resource-show.component';
@@ -97,6 +98,7 @@ const routes: Routes = [
     AttributeInputComponent,
     AssociationInputComponent,
     ResourceCrudComponent,
+    ResourceErrorComponent,
     ResourceIndexComponent,
     ResourceNewComponent,
     ResourceShowComponent,
